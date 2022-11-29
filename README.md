@@ -4,7 +4,7 @@ This program is used to call calculate the moment-curvature relation of textiles
 
 <Insert information on the paper when this is out>
 
-The code was developed at Department of Materials and Production at Aalborg University by  P.H. Broberg, E. Lindgaard, C. Krogh, S.M. Jensen, G.G. Trabal, A.F.-M Thai, and B.L.V. Bak.
+The code was developed at Department of Materials and Production at Aalborg University by  P.H. Broberg, E. Lindgaard, C. Krogh, S.M. Jensen, G.G. Trabal, A.F.-M Thai, and B.L.V. Bak. Please feel free to use and adapt the codes but remember to give proper attribution.
 
 Packages needed (version used during development of code)
 ---------------
