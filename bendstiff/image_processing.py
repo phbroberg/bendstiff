@@ -85,7 +85,7 @@ def median_midline_extraction(img):
     y = []
     for i in range(img.shape[1]):
         hv = np.where(img[:,i]==255)
-        y.append(-np.median(hv))
+        y.append(-np.median(hv)) if len(hv[0]) > 0 else y.append(float('nan'))
         x.append(i+1)
     coord    = [x,y]
     coord    = np.array(coord)
@@ -283,11 +283,15 @@ def run_improc(img_name, par):
                           'ylabel':'y [mm]'} )
         
         # Create subplot figures with title and nrows,ncols
-        fig,axes = bendstiff.utility.subplot_creator('Image Processing',2,3)
+        fig,axes = bendstiff.utility.subplot_creator('Image Processing', 2, 3, \
+                                                     figsize = (15, 10))
         
         # Fill out the subplots
         bendstiff.utility.subplot_filler(axes,plot_par)
-    
+        
+        if 'results_dir' in par:
+            fig.savefig(par['results_dir']+'/image_processing.pdf')
+        
     return x, y
 
 

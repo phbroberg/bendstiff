@@ -177,7 +177,7 @@ def log_interp(zz, xx, yy):
     return np.power(10.0, np.interp(logz, logx, logy))
 
 
-def subplot_creator(suptitle,rows,cols):
+def subplot_creator(suptitle, rows, cols, figsize = None):
     """
     Function for generating the subplots.
 
@@ -199,13 +199,13 @@ def subplot_creator(suptitle,rows,cols):
 
     """
 
-    fig, axes = plt.subplots(nrows=rows, ncols=cols)
+    fig, axes = plt.subplots(nrows=rows, ncols=cols, figsize = figsize)
         
     fig.suptitle(suptitle, fontsize=16)
     
     return fig, axes
 
-def subplot_filler(axes,plot_par):
+def subplot_filler(axes, plot_par, results_dir = ''):
     """
     Function for filling the figure.
 
@@ -264,7 +264,7 @@ def subplot_filler(axes,plot_par):
             if 'xlabel' in newlist[i]:
                 axf[j].set_xlabel(newlist[i]['xlabel'])
                 axf[j].set_ylabel(newlist[i]['ylabel'])
-   
+        
 def error(x, y, xa, ya, n):
     """
     Function for calculating the errors between two data sets. 
@@ -303,7 +303,7 @@ def error(x, y, xa, ya, n):
     return abs_error, relative_error, average_error
             
 def save_par(test_name, W_a, w, p, mpp, m=4, vl=0, smooth=True, plot=False,
-             n=50, n_r = 8, L_kernel = 0.5, con = ()):
+             n=50, n_r = 8, L_kernel = 0.5, con = (), results_dir = ''):
     """
     Function for saving the parameters used for the analysis and initialising
     default parameters.
@@ -338,6 +338,8 @@ def save_par(test_name, W_a, w, p, mpp, m=4, vl=0, smooth=True, plot=False,
         of the length of the first region. The default is 0.5.
     con : dict, optional
         Constraints used for the smoothing spline fit. The default is ().
+    results_dir : str, optional
+        Name of the folder for storing images. The default is ''.
 
     Returns
     -------
@@ -347,7 +349,8 @@ def save_par(test_name, W_a, w, p, mpp, m=4, vl=0, smooth=True, plot=False,
     """
     # Define dictionary with parameters for easy transfer between functions
     par = {'W_a':W_a, 'w':w, 'mpp':mpp, 'm':m, 'p':p, 'vl':vl, 'smooth':smooth,\
-           'plot':plot, 'n':n, 'n_r':n_r, 'L_kernel':L_kernel, 'con':con}
+           'plot':plot, 'n':n, 'n_r':n_r, 'L_kernel':L_kernel, 'con':con,      \
+           'results_dir':results_dir}
     dict_file = open(test_name+'.pkl', 'wb')
     pickle.dump(par, dict_file)
     dict_file.close()

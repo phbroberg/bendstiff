@@ -202,7 +202,8 @@ def run_mocurv(x, y, spf, par):
     
     if par['plot'] == True:
         
-        fig,axes = bendstiff.utility.subplot_creator('Moment-Curvature',1,2)
+        fig,axes = bendstiff.utility.subplot_creator('Moment-Curvature', 1, 2, \
+                                                     figsize = (10, 5))
         
         plot_par.append( {"Title": 'Moment', "Order": 0, "Type": 'xy', 
                           "Data": (x_sp,moment_vector), 'xlabel': 'x [mm]', 
@@ -223,4 +224,7 @@ def run_mocurv(x, y, spf, par):
         
         # Fill out the subplots
         bendstiff.utility.subplot_filler(axes,plot_par)
+        if 'results_dir' in par:
+            fig.savefig(par['results_dir']+'/mocurv.pdf')
+        
     return moment_vector, y_spc, arc_length_list
