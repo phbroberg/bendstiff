@@ -23,7 +23,7 @@
 ############################################################################
 
 This module contains funcitonalities for executing the one-click bending
-stiffnes.
+stiffness.
 
 """
 
@@ -39,7 +39,7 @@ def run_bendstiff(image_name, par, validation = False):
 
     Parameters
     ----------
-    image_name : array
+    image_name : str
         Raw image.
     par : dict
         Parameters used for the analysis.

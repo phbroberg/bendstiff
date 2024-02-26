@@ -35,6 +35,8 @@ Parameters that need to be specified:
     load : bool
         If load is True, previous parameters (saved in pkl file) is used for 
         the analysis.
+    interactive_plot : bool
+        If true the generated plots will be showed interactively.     
     W_a : float
         Areal load of the the fabric [N/m^2]
     w : float
@@ -82,6 +84,8 @@ image_name = test_name + ".JPG"
 
 load = False # Should user parameters be loaded or specified
 
+interactive_plot = False # Turn on/off interactive plotting
+
 ###### Definition of parameters. Only define if load is set to False #########
 # Specimen and image 
 W_a = 13.6      # Areal load of fabric N/m^2
@@ -99,9 +103,14 @@ con = ({'x':0.0, 'f(x)':0.0 , 'der':1 },)  # Constraints on the fit. Use
 cwd  = os.getcwd()
 path = os.path.join(cwd,test)
 os.chdir(path)
+# Make results folder
+results_dir = str(test_name)+'_results'
+if not os.path.exists(results_dir): 
+    os.makedirs(results_dir) 
 
 if load == False:
-    par = bendstiff.utility.save_par(test_name, W_a, w, p, mpp, con = con)
+    par = bendstiff.utility.save_par(test_name, W_a, w, p, mpp, con = con, 
+                                     results_dir = results_dir)
 
 #### The following line is an example of how to change the optional parameters
 #    par = bendstiff.utility.save_par(test_name, W_a, w, p, mpp, con = con,     \
@@ -109,6 +118,9 @@ if load == False:
 #                                     L_kernel = 0.5, n = 50, m = 4, )
 else:
     par = bendstiff.utility.load_par(test_name)
+
+# Turn on or off the interactive plotting
+plt.ion() if interactive_plot else plt.ioff()
     
 ###### Run the analysis  #####################################################
 x, y, curvature, moment  = bendstiff.run.run_bendstiff(image_name, par)
@@ -119,10 +131,17 @@ plt.figure('Computed moment-curvature relationship')
 plt.plot(curvature, moment)
 plt.xlabel('$\kappa$ [m$^{-1} $]')
 plt.ylabel('$M$ [N]')
+plt.savefig(results_dir+'/resulting_moment_curvature.pdf')
 
 # Save the results
 f = open(test_name+'_results.pkl', 'wb')
 pickle.dump([x, y, curvature, moment], f)
+f.close()
+
+# Write the parameters used to txt file
+f = open(results_dir + "/parameters.txt","w")
+for key, value in par.items():  
+   f.write('%s : %s\n' % (key, value))
 f.close()
 
 # set directory to original

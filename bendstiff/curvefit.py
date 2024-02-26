@@ -395,6 +395,8 @@ def cv_plot(x, y, B, omega_jk, par, spar_plot):
     plt.yscale('log')
     plt.legend()
     plt.grid()
+    if 'results_dir' in par:
+        plt.savefig(par['results_dir']+'/CV_plot.pdf')
     return
     
 
@@ -425,7 +427,8 @@ def run_curvefit(x, y, par):
     
     if par['plot'] == True:
         
-        fig,axes = bendstiff.utility.subplot_creator('Curvefit',2,3)
+        fig,axes = bendstiff.utility.subplot_creator('Curvefit', 2, 3,         \
+                                                     figsize = (15, 10))
         
         x_sp = np.linspace(0 , np.max(x), 100)
         y_sp = np.array([spline_calc(a, spf) for a in x_sp]) 
@@ -457,4 +460,7 @@ def run_curvefit(x, y, par):
         
         # Fill out the subplots
         bendstiff.utility.subplot_filler(axes,plot_par)
+        if 'results_dir' in par:
+            fig.savefig(par['results_dir']+'/curvefit.pdf')
+        
     return spf

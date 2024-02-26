@@ -55,6 +55,8 @@ Input parameters
     load : bool
         If load is True, previous parameters (saved in pkl file) is used for 
         the analysis.
+    interactive_plot : bool
+        If true the generated plots will be showed interactively.     
     W_a : float
         Areal load of the the fabric [N/m^2]
     w : float
